@@ -1,5 +1,5 @@
-import { NEWS_API_KEY } from '@env';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
@@ -7,7 +7,9 @@ import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import { ListItem } from './components/ListItem';
 import { Articles } from './types/articles';
 
-const URL = `https://newsapi.org/v2/top-headlines?country=jp&category=business&apiKey=${NEWS_API_KEY}`;
+const URL = `https://newsapi.org/v2/top-headlines?country=jp&category=business&apiKey=${
+  Constants?.manifest?.extra?.newsApiKey as string
+}`;
 
 export default function App() {
   const [articles, setArticles] = useState<Articles>([]);
