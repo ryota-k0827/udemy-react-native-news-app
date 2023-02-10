@@ -1,20 +1,33 @@
+import { FC } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-export const ListItem = () => {
+/**
+ *
+ * @param {
+ *  imageUrl: 画像URL(string)
+ *  title: タイトル(string)
+ *  author: ニュース提供元(string)
+ * }
+ * @returns
+ */
+
+type Props = {
+  imageUrl: string;
+  title: string;
+  author: string;
+};
+
+export const ListItem: FC<Props> = (props) => {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.leftContainer}>
-        <Image
-          style={{ width: 100, height: 100 }}
-          source={{ uri: 'https://picsum.photos/200/300' }}
-        />
+        <Image style={{ width: 100, height: 100 }} source={{ uri: props.imageUrl }} />
       </View>
       <View style={styles.rightContainer}>
         <Text numberOfLines={3} style={styles.text}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptate, quod, quia,
-          voluptates quae voluptatibus quibusdam hogehogehogegeeegeegegegeg
+          {props.title}
         </Text>
-        <Text style={styles.subText}>React Text</Text>
+        <Text style={styles.subText}>{props.author}</Text>
       </View>
     </View>
   );
