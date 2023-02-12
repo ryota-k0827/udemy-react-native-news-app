@@ -1,48 +1,18 @@
-import { NEWS_API_KEY } from '@env';
-import axios from 'axios';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ArticleScreen } from './screens/ArticleScreen';
 
-import { ListItem } from './components/ListItem';
-import { Articles } from './types/articles';
+import { HomeScreen } from './screens/HomeScreen';
 
-const URL = `https://newsapi.org/v2/top-headlines?country=jp&category=business&apiKey=${NEWS_API_KEY}`;
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [articles, setArticles] = useState<Articles>([]);
-
-  const fetchArticles = async () => {
-    try {
-      const res = await axios.get(URL);
-      console.log(res.data.articles);
-      setArticles(res.data.articles);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchArticles();
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={articles}
-        renderItem={({ item }) => (
-          <ListItem imageUrl={item.urlToImage} title={item.title} author={item.author} />
-        )}
-        keyExtractor={(_, index) => index.toString()}
-      />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Article" component={ArticleScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#eee',
-  },
-});

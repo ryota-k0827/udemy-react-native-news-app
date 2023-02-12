@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 /**
  *
@@ -7,6 +7,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
  *  imageUrl: 画像URL(string)
  *  title: タイトル(string)
  *  author: ニュース提供元(string)
+ *  onPress: タップ時の処理(function)
  * }
  * @returns
  */
@@ -15,11 +16,12 @@ type Props = {
   imageUrl: string;
   title: string;
   author: string;
+  onPress: () => void;
 };
 
 export const ListItem: FC<Props> = (props) => {
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity style={styles.itemContainer} onPress={props.onPress}>
       <View style={styles.leftContainer}>
         <Image style={{ width: 100, height: 100 }} source={{ uri: props.imageUrl }} />
       </View>
@@ -29,7 +31,7 @@ export const ListItem: FC<Props> = (props) => {
         </Text>
         <Text style={styles.subText}>{props.author}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
